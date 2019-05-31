@@ -108,24 +108,32 @@ void aws_byte_buf_clean_up_secure(struct aws_byte_buf *buf) {
     AWS_POSTCONDITION(aws_byte_buf_is_valid(buf));
 }
 
-bool aws_byte_buf_eq(const struct aws_byte_buf *a, const struct aws_byte_buf *b) {
-    AWS_ASSERT(a && b);
-    return aws_array_eq(a->buffer, a->len, b->buffer, b->len);
+bool aws_byte_buf_eq(const struct aws_byte_buf *const a, const struct aws_byte_buf *const b) {
+    AWS_PRECONDITION(aws_byte_buf_is_valid(a) && aws_byte_buf_is_valid(b));
+    bool rval = aws_array_eq(a->buffer, a->len, b->buffer, b->len);
+    AWS_POSTCONDITION(aws_byte_buf_is_valid(a) && aws_byte_buf_is_valid(b));
+    return rval;
 }
 
-bool aws_byte_buf_eq_ignore_case(const struct aws_byte_buf *a, const struct aws_byte_buf *b) {
-    AWS_ASSERT(a && b);
-    return aws_array_eq_ignore_case(a->buffer, a->len, b->buffer, b->len);
+bool aws_byte_buf_eq_ignore_case(const struct aws_byte_buf *const a, const struct aws_byte_buf *const b) {
+    AWS_PRECONDITION(aws_byte_buf_is_valid(a) && aws_byte_buf_is_valid(b));
+    bool rval = aws_array_eq_ignore_case(a->buffer, a->len, b->buffer, b->len);
+    AWS_POSTCONDITION(aws_byte_buf_is_valid(a) && aws_byte_buf_is_valid(b));
+    return rval;
 }
 
-bool aws_byte_buf_eq_c_str(const struct aws_byte_buf *buf, const char *c_str) {
-    AWS_ASSERT(buf && c_str);
-    return aws_array_eq_c_str(buf->buffer, buf->len, c_str);
+bool aws_byte_buf_eq_c_str(const struct aws_byte_buf *const buf, const char *const c_str) {
+    AWS_PRECONDITION(aws_byte_buf_is_valid(buf) && c_str);
+    bool rval = aws_array_eq_c_str(buf->buffer, buf->len, c_str);
+    AWS_POSTCONDITION(aws_byte_buf_is_valid(buf));
+    return rval;
 }
 
-bool aws_byte_buf_eq_c_str_ignore_case(const struct aws_byte_buf *buf, const char *c_str) {
-    AWS_ASSERT(buf && c_str);
-    return aws_array_eq_c_str_ignore_case(buf->buffer, buf->len, c_str);
+bool aws_byte_buf_eq_c_str_ignore_case(const struct aws_byte_buf *const buf, const char *const c_str) {
+    AWS_PRECONDITION(aws_byte_buf_is_valid(buf) && c_str);
+    bool rval = aws_array_eq_c_str_ignore_case(buf->buffer, buf->len, c_str);
+    AWS_POSTCONDITION(aws_byte_buf_is_valid(buf));
+    return rval;
 }
 
 int aws_byte_buf_init_copy_from_cursor(
@@ -264,13 +272,17 @@ int aws_byte_buf_cat(struct aws_byte_buf *dest, size_t number_of_args, ...) {
 }
 
 bool aws_byte_cursor_eq(const struct aws_byte_cursor *a, const struct aws_byte_cursor *b) {
-    AWS_ASSERT(a && b);
-    return aws_array_eq(a->ptr, a->len, b->ptr, b->len);
+    AWS_PRECONDITION(aws_byte_cursor_is_valid(a) && aws_byte_cursor_is_valid(b));
+    bool rv = aws_array_eq(a->ptr, a->len, b->ptr, b->len);
+    AWS_POSTCONDITION(aws_byte_cursor_is_valid(a) && aws_byte_cursor_is_valid(b));
+    return rv;
 }
 
 bool aws_byte_cursor_eq_ignore_case(const struct aws_byte_cursor *a, const struct aws_byte_cursor *b) {
-    AWS_ASSERT(a && b);
-    return aws_array_eq_ignore_case(a->ptr, a->len, b->ptr, b->len);
+    AWS_PRECONDITION(aws_byte_cursor_is_valid(a) && aws_byte_cursor_is_valid(b));
+    bool rv = aws_array_eq_ignore_case(a->ptr, a->len, b->ptr, b->len);
+    AWS_POSTCONDITION(aws_byte_cursor_is_valid(a) && aws_byte_cursor_is_valid(b));
+    return rv;
 }
 
 /* Every possible uint8_t value, lowercased */
